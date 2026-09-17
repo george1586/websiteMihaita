@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a call — C&amp;I Media</title>
+  <meta name="description"
+    content="Tell us about your business in two minutes, then pick a time for your call with C&I Media. First video free of charge.">
+  <link rel="canonical" href="https://c-and-i-media.com/book.html">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/trusted/favicon.png">
+  <link rel="apple-touch-icon" href="assets/trusted/favlogo.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://c-and-i-media.com/book.html">
+  <meta property="og:title" content="Book a call — C&amp;I Media">
+  <meta property="og:description"
+    content="Two quick steps: tell us about your business, then pick a time. Your first video is free of charge.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Book a call — C&amp;I Media">
+  <meta name="twitter:description"
+    content="Two quick steps: tell us about your business, then pick a time. Your first video is free of charge.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://form.typeform.com">
+  <link rel="preconnect" href="https://api.typeform.com">
+  <link rel="preconnect" href="https://calendly.com">
+  <link rel="dns-prefetch" href="https://embed.typeform.com">
+  <link rel="dns-prefetch" href="https://assets.calendly.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="book.css">
+</head>
+
+<body>
+
+  <a class="skip" href="#book">Skip to content</a>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="brand" href="index.html" aria-label="C&amp;I Media home">
+        <img class="brand__logo" src="assets/trusted/logo.png" alt="C&amp;I Media" width="30" height="30"
+          decoding="async">
+      </a>
+
+      <div class="nav__right">
+        <a class="btn btn--ghost btn--sm" href="index.html">&larr; Back to site</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ BOOKING ============ -->
+  <main class="book" id="book">
+    <div class="book__glow" aria-hidden="true"></div>
+
+    <div class="wrap book__inner">
+      <header class="book__head">
+        <p class="kicker reveal">Book a call</p>
+        <h1 class="display display--2 reveal">Your first video is<br><span class="outline">one call away.</span></h1>
+        <p class="book__sub reveal" data-letters>
+          Answer a few quick questions so we come prepared, then pick a time that suits you.
+          Two minutes, start to finish.
+        </p>
+      </header>
+
+      <div class="bcard reveal" id="bookCard">
+        <ol class="bcard__head" aria-label="Booking steps">
+          <li class="stp is-active" id="stepForm" aria-current="step">
+            <span class="stp__n" aria-hidden="true"><span class="stp__num">1</span><span
+                class="stp__tick">&#10003;</span></span>
+            <span class="stp__txt">
+              <span class="stp__label"><span class="stp__long">Tell us about you</span><span class="stp__short">About
+                  you</span></span>
+              <span class="stp__meta">About 2 minutes</span>
+            </span>
+          </li>
+          <li class="stp" id="stepCal">
+            <span class="stp__n" aria-hidden="true"><span class="stp__num">2</span><span
+                class="stp__tick">&#10003;</span></span>
+            <span class="stp__txt">
+              <span class="stp__label">Pick a time</span>
+              <span class="stp__meta">30-minute call</span>
+            </span>
+          </li>
+        </ol>
+
+        <div class="bcard__stage">
+
+          <!-- Step 1: Typeform. The live embed takes its settings from the Typeform admin panel;
+               the data-tf-* attributes here layer on top of them. -->
+          <section class="scene scene--form" id="sceneForm" aria-label="Step 1: tell us about you">
+            <div class="tf" id="tfHost" data-tf-live="01KNTAQEBB41ZJJWFBTGXS7TB5" data-tf-on-ready="cimTypeformReady"
+              data-tf-on-submit="cimTypeformSubmit" data-tf-inline-on-mobile
+              data-tf-iframe-props="title=Tell us about you"></div>
+            <div class="loader" id="tfLoader" role="status" aria-live="polite">
+              <span class="loader__ring" aria-hidden="true"></span>
+              <span>Loading your questions</span>
+            </div>
+          </section>
+          <p class="fallback" id="tfFallback" hidden>Not loading? <a href="https://form.typeform.com/to/e54NM0aD"
+              target="_blank" rel="noopener">Open the questions in a new tab</a></p>
+
+          <!-- Step 2: Calendly. Revealed once the Typeform has been submitted. -->
+          <section class="scene scene--cal" id="sceneCal" aria-label="Step 2: pick a time" tabindex="-1" hidden>
+            <div class="booked" id="booked" hidden>
+              <div class="booked__txt">
+                <span class="tick" aria-hidden="true">&#10003;</span>
+                <div>
+                  <strong>You&rsquo;re booked.</strong>
+                  <p>The calendar invite is on its way to your inbox. See you on the call.</p>
+                </div>
+              </div>
+              <a class="btn btn--ghost btn--sm" href="index.html">Back to the site</a>
+            </div>
+
+            <div class="scene__bar" id="restoreBar" hidden>
+              <span>You&rsquo;ve already answered our questions &mdash; just pick a time.</span>
+              <a href="book.html" id="restart">Start over</a>
+            </div>
+
+            <div class="scene__cal">
+              <!-- Calendly inline widget begin -->
+              <div class="calendly-inline-widget" id="calHost"
+                data-url="https://calendly.com/mihnea17/30min?hide_gdpr_banner=1&amp;hide_event_type_details=1&amp;background_color=1f1f1f&amp;text_color=f2f2f2&amp;primary_color=ee4452"
+                data-auto-load="false" data-resize="true" style="min-width:320px;height:700px;"></div>
+              <!-- Calendly inline widget end -->
+              <div class="loader" id="calLoader" role="status" aria-live="polite">
+                <span class="loader__ring" aria-hidden="true"></span>
+                <span>Loading available times</span>
+              </div>
+            </div>
+          </section>
+          <p class="fallback" id="calFallback" hidden>Not loading? <a href="https://calendly.com/mihnea17/30min"
+              target="_blank" rel="noopener">Open the calendar in a new tab</a></p>
+        </div>
+      </div>
+
+      <div class="book__trust reveal">
+        <div class="avatars" aria-hidden="true">
+          <img src="assets/trusted/cj_weber.jpg" alt="" width="800" height="800" loading="lazy" decoding="async">
+          <img src="assets/trusted/arnau.jpg" alt="" width="800" height="800" loading="lazy" decoding="async">
+          <img src="assets/trusted/andy.jpg" alt="" width="800" height="800" loading="lazy" decoding="async">
+          <img src="assets/trusted/bryan.jpg" alt="" width="800" height="800" loading="lazy" decoding="async">
+          <img src="assets/trusted/lava.jpg" alt="" width="800" height="800" loading="lazy" decoding="async">
+        </div>
+        <p>Trusted by C.J. Weber, Arnau Ros, Andy Elliott, Bryan Ng and Lava</p>
+      </div>
+      <div class="book__proof reveal">
+        <p class="guarantee"><span class="tick" aria-hidden="true">&#10003;</span> First video free of charge</p>
+        <p class="guarantee"><span class="tick" aria-hidden="true">&#10003;</span> No obligation</p>
+      </div>
+
+      <section class="expect" aria-labelledby="expectTitle">
+        <div class="expect__head">
+          <p class="kicker reveal">On the call</p>
+          <h2 class="expect__title reveal" id="expectTitle">Here&rsquo;s what we&rsquo;ll <span
+              class="em">cover</span></h2>
+        </div>
+        <div class="expect__grid">
+          <div class="expect__item reveal">
+            <span class="expect__n">01</span>
+            <h3>Your offer</h3>
+            <p>Your offer, your margins, and the exact customer you want walking into your calendar.</p>
+          </div>
+          <div class="expect__item reveal">
+            <span class="expect__n">02</span>
+            <h3>Your unfair advantage</h3>
+            <p>How we differentiate you from your competition using the thing only you can say.</p>
+          </div>
+          <div class="expect__item reveal">
+            <span class="expect__n">03</span>
+            <h3>Your first video</h3>
+            <p>If you qualify, we onboard you and your first fully produced video is live within 7 days &mdash; free
+              of charge.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <div class="footer__brand">
+        <a class="brand brand--lg" href="index.html">
+          <img class="brand__logo" src="assets/trusted/logo.png" alt="C&amp;I Media" width="30" height="30"
+            decoding="async">
+        </a>
+        <p class="footer__tag">Done for you YouTube. You record, we handle the rest.</p>
+      </div>
+      <div class="footer__col"></div>
+      <div class="footer__col"></div>
+    </div>
+
+    <div class="wrap footer__bar">
+      <p>&copy; <span id="year">2026</span> C&amp;I Media. All rights reserved.</p>
+      <p>Built for creators who&rsquo;d rather be recording.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <!-- book.js goes before the Typeform SDK so the data-tf-on-* callbacks exist when it initialises -->
+  <script src="book.js"></script>
+  <script src="https://embed.typeform.com/next/embed.js"></script>
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</body>
+
+</html>

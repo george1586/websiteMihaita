@@ -1,0 +1,525 @@
+/* ==========================================================================
+   C&I Media — booking page (book.html)
+   Loads after styles.css and only adds what this page needs.
+   ========================================================================== */
+
+/* ---------- page ---------- */
+.book {
+  position: relative;
+  padding-top: clamp(44px, 6vw, 72px);
+  padding-bottom: clamp(72px, 10vw, 140px);
+  overflow: hidden;
+}
+
+.book__glow {
+  position: absolute;
+  left: 50%;
+  top: -14%;
+  width: min(1100px, 130vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 50% 40%, rgba(var(--accent-rgb), .16), rgba(var(--accent-rgb), 0) 58%);
+  pointer-events: none;
+}
+
+.book__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.book__head {
+  text-align: center;
+  max-width: 840px;
+  margin-bottom: clamp(30px, 4.5vw, 52px);
+}
+
+.book__head .display--2 {
+  margin-bottom: 18px;
+}
+
+.book__sub {
+  max-width: 56ch;
+  margin-inline: auto;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+}
+
+/* ==========================================================================
+   THE CARD — steps on top, one scene at a time underneath
+   ========================================================================== */
+.bcard {
+  width: min(100%, 980px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  background: var(--surface-2);
+  overflow: hidden;
+  scroll-margin-top: 84px;
+  box-shadow:
+    0 0 0 1px rgba(242, 242, 242, .04),
+    0 50px 140px -40px rgba(var(--accent-rgb), .35),
+    0 30px 60px -30px rgba(0, 0, 0, .8);
+}
+
+/* ---------- steps ---------- */
+.bcard__head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.stp {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px clamp(16px, 2.6vw, 26px);
+  color: var(--dim);
+  transition: color .3s var(--ease);
+}
+
+.stp+.stp {
+  border-left: 1px solid var(--border-soft);
+}
+
+/* red line under the step in play; stays faint once done */
+.stp::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .7s var(--ease), opacity .3s var(--ease);
+}
+
+.stp.is-active::after {
+  transform: scaleX(1);
+}
+
+.stp.is-done::after {
+  transform: scaleX(1);
+  opacity: .35;
+}
+
+.stp__n {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--dim);
+  transition: background .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease);
+}
+
+/* number and tick share the same cell; one is shown at a time */
+.stp__n>span {
+  grid-area: 1 / 1;
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+
+.stp__tick {
+  font-size: .8rem;
+  opacity: 0;
+  transform: scale(.5);
+}
+
+.stp.is-active .stp__n {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .14);
+}
+
+.stp.is-done .stp__n {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+}
+
+.stp.is-done .stp__num {
+  opacity: 0;
+  transform: scale(.5);
+}
+
+.stp.is-done .stp__tick {
+  opacity: 1;
+  transform: none;
+}
+
+.stp__txt {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.stp__label {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.stp.is-active .stp__label,
+.stp.is-done .stp__label {
+  color: var(--text);
+}
+
+.stp__meta {
+  font-size: .74rem;
+  letter-spacing: .05em;
+  color: var(--dim);
+}
+
+/* shorter step-one label on phones, see @media (max-width:640px) */
+.stp__short {
+  display: none;
+}
+
+/* ---------- stage ---------- */
+.bcard__stage {
+  position: relative;
+  background: var(--surface);
+}
+
+.scene {
+  position: relative;
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+}
+
+.scene.is-leaving {
+  opacity: 0;
+  transform: translateY(-14px);
+}
+
+.scene.is-entering {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.scene:focus {
+  outline: none;
+}
+
+/* Typeform: the live embed injects <div data-tf-widget> into .tf; the height is ours */
+.scene--form {
+  height: clamp(520px, 66vh, 640px);
+}
+
+.tf {
+  width: 100%;
+  height: 100%;
+}
+
+.tf>[data-tf-widget] {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.tf .tf-v1-widget iframe {
+  border-radius: 0 !important;
+}
+
+/* Calendly: the iframe fills the host and grows to fit each page (resize) */
+.scene__cal {
+  position: relative;
+}
+
+.calendly-inline-widget {
+  width: 100%;
+}
+
+.calendly-inline-widget iframe {
+  display: block;
+}
+
+.calendly-spinner {
+  display: none !important;
+}
+
+/* ---------- loading + fallback ---------- */
+.loader {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: var(--surface);
+  color: var(--dim);
+  font-size: .76rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: opacity .45s var(--ease);
+}
+
+.loader.is-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader__ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  animation: bookspin .9s linear infinite;
+}
+
+@keyframes bookspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 16px;
+  font-size: .82rem;
+  color: var(--dim);
+  border-top: 1px solid var(--border-soft);
+  background: var(--bg-2);
+}
+
+.fallback a,
+.scene__bar a {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.fallback a:hover,
+.scene__bar a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- step 2 extras ---------- */
+.booked {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  padding: 18px clamp(16px, 2.6vw, 26px);
+  background: linear-gradient(90deg, rgba(var(--accent-rgb), .16), transparent 70%), var(--bg-2);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.booked__txt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.booked__txt .tick {
+  width: 28px;
+  height: 28px;
+  flex-basis: 28px;
+  font-size: .85rem;
+}
+
+.booked strong {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.booked p {
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+/* shown only when a finished form was remembered from an earlier visit */
+.scene__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 12px clamp(16px, 2.6vw, 26px);
+  font-size: .82rem;
+  color: var(--dim);
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--bg-2);
+}
+
+/* ==========================================================================
+   BELOW THE CARD
+   ========================================================================== */
+.book__trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  margin-top: clamp(26px, 3.5vw, 36px);
+}
+
+.avatars {
+  display: flex;
+}
+
+.avatars img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bg);
+  background: var(--surface);
+  filter: grayscale(1);
+}
+
+.avatars img+img {
+  margin-left: -10px;
+}
+
+.book__trust p {
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+.book__proof {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 26px;
+  margin-top: 16px;
+}
+
+/* what the call covers */
+.expect {
+  width: min(100%, 980px);
+  margin-top: clamp(64px, 9vw, 120px);
+}
+
+.expect__head {
+  text-align: center;
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+
+.expect__title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.expect__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.expect__item {
+  padding: clamp(20px, 2.4vw, 28px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface-2);
+}
+
+.expect__n {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.expect__item h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  margin-bottom: 8px;
+}
+
+.expect__item p {
+  font-size: .92rem;
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width:900px) {
+  .expect__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width:640px) {
+  .book {
+    padding-top: 32px;
+  }
+
+  .bcard {
+    border-radius: var(--r-lg);
+  }
+
+  .stp {
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .stp__n {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+    font-size: .9rem;
+  }
+
+  .stp__label {
+    font-size: .95rem;
+    letter-spacing: .03em;
+  }
+
+  .stp__long,
+  .stp__meta {
+    display: none;
+  }
+
+  .stp__short {
+    display: inline;
+  }
+
+  .scene--form {
+    height: max(520px, 72vh);
+    height: max(520px, 72svh);
+  }
+
+  .booked {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
