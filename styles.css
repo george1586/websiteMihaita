@@ -359,6 +359,13 @@ section {
   text-transform: uppercase;
 }
 
+.brand__logo {
+  display: block;
+  height: 34px;
+  width: auto;
+  flex: 0 0 auto;
+}
+
 .brand__mark {
   background: var(--accent);
   color: var(--accent-fg);
@@ -1811,6 +1818,10 @@ section {
 }
 
 @media (max-width:640px) {
+  .brand__logo {
+    height: 28px;
+  }
+
   .display--hero {
     font-size: clamp(4rem, 15vw, 7rem);
   }
