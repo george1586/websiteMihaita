@@ -12,6 +12,8 @@ The site is plain HTML, CSS and JavaScript. No framework, no build step, no depe
 | `index.html` | The whole site, one page. Copy, structure, meta tags and JSON-LD live here. |
 | `styles.css` | Design tokens, layout, components and the responsive breakpoints. |
 | `script.js` | Small interactions: nav, reveals, process rail, video playlist, FAQ, form. |
+| `privacy-policy.html`, `terms.html`, `sms-opt-in.html` | Legal pages, linked from the "Legal" column in every footer. They share `legal.css`. |
+| `sms.js` | The SMS opt-in form. It posts to the URL in the form's `data-endpoint` attribute (empty = sends nothing). |
 
 ## Run it locally
 
@@ -92,6 +94,7 @@ The form validates name and email in the browser and then shows a success messag
 
 - Swap the placeholder thumbnails in `#work` for real video stills and link each card to the channel.
 - Fill in the social links in the footer (currently `#`).
-- Add real privacy, terms and refund pages, or remove those footer links.
+- Set `data-endpoint` on `#smsForm` in `sms-opt-in.html` (GoHighLevel/Zapier/Make webhook or Formspree; it must allow cross-origin POSTs). The form sends name, phone, email, which boxes were ticked, the exact consent wording, a timestamp and the page URL.
+- Have a lawyer review the legal pages before relying on them.
 - Add an `og:image` for link previews.
 - Point the form at a real endpoint (see above).
