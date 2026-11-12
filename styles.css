@@ -1614,6 +1614,15 @@ section {
 /* ==========================================================================
    FOOTER
    ========================================================================== */
+   .flex {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .flex-col {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 .footer {
   border-top: 1px solid var(--border-soft);
   padding-top: clamp(48px, 7vw, 80px);
